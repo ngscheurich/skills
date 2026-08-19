@@ -25,8 +25,8 @@ Collect what the reviewers must hold the code against, so each one reads the sam
 
 - The rubric: [rubric.md](rubric.md).
 - Style guides for the file types touched: the project's language style guide(s).
-- Prose + naming: the project's prose guide (honor its avoid-list).
-- Domain truth: `CONTEXT.md`, plus any ADRs/specs the slice's code or brief cite.
+- Prose + naming: the project's prose guide, or the `write-prose` skill's fallback when it has none (honor its avoid-list).
+- Domain truth: the project's domain glossary (conventionally `CONTEXT.md`), plus any ADRs/specs the slice's code or brief cite.
 
 [rubric.md](rubric.md) is included with this skill; the other documents may not exist. Pass what you find as paths, not pasted contents — reviewers read them themselves.
 
@@ -47,3 +47,5 @@ Spawn one **judge** subagent. Give it the slice definition, the rubric, and all 
 Build the final review yourself using the winner as the spine: graft in the unique findings the judge credited to the other reviewers, drop anything the judge flagged as wrong, de-dupe overlaps, and re-sort every finding by severity. Attribute nothing to individual reviewers in the body — it reads as one review.
 
 Write it to `.scratch/reviews/<slug>.md` (slug = brief name, branch, or a short feature kebab; resolve conflicts with `-<n>`). Open with a one-paragraph verdict and a severity tally, then the findings. End the file with a short `## Provenance` note: the targets, reviewer count, and which review the judge ranked first. Print the verdict and tally to chat with the file path.
+
+`.scratch/` is a working directory for artifacts that aren't part of the project's own documentation. Create it if absent, and add it to the project's ignore file if it isn't already covered.

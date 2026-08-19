@@ -12,7 +12,7 @@ Succinctness is a strong default, not a hard line cap, and the bar is high: trim
 
 ## Markdown
 
-**Never hard-wrap Markdown prose.** One line per paragraph, per list item and per table row; the renderer does the wrapping, and long lines are correct. This holds for every Markdown file in the tree — ADRs, specs, tickets, research notes, this document. A deliberate single-purpose short line is a different thing and stays: CONTEXT.md's glossary puts `**Term**:` and `_Avoid_:` each on their own line because they're structure, not wrapped prose.
+**Never hard-wrap Markdown prose.** One line per paragraph, per list item and per table row; the renderer does the wrapping, and long lines are correct. This holds for every Markdown file in the tree — ADRs, specs, tickets, research notes, this document. A deliberate single-purpose short line is a different thing and stays: the project's domain glossary (conventionally `CONTEXT.md`) puts `**Term**:` and `_Avoid_:` each on their own line because they're structure, not wrapped prose.
 
 This is the one place the 80-column rule doesn't reach, and the difference is who does the wrapping. A comment and a commit body are read where nothing will reflow them — a side-by-side diff, `git log` in a terminal — so they carry their own breaks. Markdown is rendered, so a fixed column buys nothing and costs a diff that reflows an entire paragraph when a word changes in its first sentence.
 
@@ -26,7 +26,7 @@ Don't hyphenate established multi-word terms, or phrases sitting in noun positio
 
 Word choice splits across two documents, and it splits by kind.
 
-A CONTEXT.md glossary is the authority on the project's domain nouns and each entry's `_Avoid_:` list governs prose wherever those nouns appear.
+The project's domain glossary (conventionally `CONTEXT.md`) is the authority on its domain nouns and each entry's `_Avoid_:` list governs prose wherever those nouns appear.
 
 This section and the table below rule on everything else: spelling, capitalization, and words to avoid for reasons that have nothing to do with the project domain. Where a term is a domain noun the glossary wins, and a ruling here never overrides an entry there.
 

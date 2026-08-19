@@ -1,6 +1,6 @@
 ---
 name: recap
-description: Generate a commit-by-commit recap of unpushed work or a chosen commit range, then wait for annotation. Use when the user asks to walk through, narrate, explain, or review their unpushed work, recent commits, or a chosen range of commits.
+description: Generate a commit-by-commit recap of unpushed work or a chosen commit range, then wait for annotation. Use when the user asks to walk through, narrate, explain, or review their unpushed work, recent commits, or a chosen range of commits. Not for explaining how the system works from the source — that is the `tour` skill.
 ---
 
 # Recap a set of commits
@@ -9,10 +9,10 @@ Generate a commit-by-commit Markdown recap of a range of local commits — by de
 
 ## Audience
 
-Don't assume a fixed reader profile. Decide the depth of explanation from, in order:
+Don't assume a fixed reader profile. Decide the depth of explanation from these rules, in order:
 
 1. **The `audience:` arg, if the invoker passed one** (e.g. `audience: backend engineer new to both`). An explicit arg wins outright.
-2. **Otherwise, your memory of the user's skillset** — the languages they're fluent in, _and the specific idioms you've already explained to them in past recaps._ Explain a construct the first time it appears for this user; once memory records it as known, reference it plainly and don't explain it again. This is what stops the same idioms (closures, generics, error-handling idioms, …) being explained run after run as the user's fluency grows — step 5 keeps the record current.
+2. **Otherwise, your memory of the user's skillset** — the languages they're fluent in, _and the specific idioms you've already explained to them in past recaps and tours._ Explain a construct the first time it appears for this user; once memory records it as known, reference it plainly and don't explain it again. This is what stops the same idioms (closures, generics, error-handling idioms, …) being explained run after run as the user's fluency grows — step 5 of the Steps list keeps the record current.
 3. **If you have neither an arg nor a relevant memory, treat every language as unfamiliar:** explain any genuinely non-obvious construct whatever its language, and state in the preamble that the audience was unspecified.
 
 ## Steps
@@ -34,7 +34,7 @@ Don't assume a fixed reader profile. Decide the depth of explanation from, in or
 
 4. **Wait for review** then respond to the annotations the user sends back.
 
-5. **Record what you explained** (whenever the audience came from the user — step 2 or the step 3 bootstrap — not from an `audience:` arg, which frames a one-off reader and says nothing about the user). Append every idiom you explained for the first time this run to the user's skillset memory, so the next recap references it plainly instead of explaining it again. If an annotation shows the user already knew something you explained, record that too. This is how the record gets built from real evidence rather than a guess.
+5. **Record what you explained** (only when the audience came from audience rule 2 or 3 — not from an `audience:` arg, which frames a one-off reader and says nothing about the user). Append every idiom you explained for the first time this run to the user's skillset memory, so the next recap or tour references it plainly instead of explaining it again. If an annotation shows the user already knew something you explained, record that too. This is how the record gets built from real evidence rather than a guess.
 
 ## recap structure
 
@@ -52,3 +52,4 @@ Don't assume a fixed reader profile. Decide the depth of explanation from, in or
 - Do not run `git fetch` unless asked; the range reflects the last fetch.
 - When a selector yields non-contiguous commits, still narrate them oldest-first and say in the preamble that they're a filtered set, not a continuous range.
 - Highlight, don't dump — a recap is curated narration, not a re-printed diff.
+- `.scratch/` is a working directory for artifacts that aren't part of the project's own documentation. Create it if absent, and add it to the project's ignore file if it isn't already covered.
