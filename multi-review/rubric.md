@@ -1,21 +1,21 @@
 # Review Rubric
 
-The standard every reviewer holds the slice against, and the scale the judge scores reviews on. Read the cited project docs directly — this rubric points at the canon, it does not restate it.
+The standard every reviewer holds the slice against, and the scale the judge scores reviews on. Read the cited project docs directly — this rubric points at the canon, it does not restate it. If a review dimension relies on a document (`CONTEXT.md`, style guide) you were not handed, skip that rule — don't go searching.
 
 ## Dimensions
 
 Score the slice on each. A strong review covers all ten, weighted toward where the slice actually lives.
 
 1. **Correctness** — Does it do what it claims across the whole slice, including error paths, edge cases, and concurrency? Trace the data end to end. Decode failures, partial writes, crashes mid-operation, and lost messages at the wire boundary are correctness bugs, not nits.
-2. **Design & domain fit** — Does it match the domain model and decisions in `CONTEXT.md` and the relevant ADRs/specs? Right seams, right layer for each responsibility, no concept invented where one already exists. Flag drift from a documented decision, and flag code that contradicts a spec.
-3. **Idiom & style** — Is it idiomatic per the project's language style guide(s)? Prefer stdlib idioms over reinvention, decode at boundaries. Flag non-idiomatic constructs.
-4. **Prose** — Comments and strings follow the project's prose guide: inclusive language (honor the avoid-list), em dashes closed up, no section-banner comments.
+2. **Design & domain fit** — Does it match the domain model and the relevant ADRs/specs? Right seams, right layer for each responsibility, no concept invented where one already exists. Flag drift from a documented decision, and flag code that contradicts a spec.
+3. **Idiom & style** — Is it idiomatic per the project's language style guide(s)? Prefer standard idioms over reinvention, decode at boundaries. Flag non-idiomatic constructs.
+4. **Prose** — Do comments and strings follow the project's prose style guide?
 5. **Tests** — Do tests exist and cover the behavior, including the failure paths? Are they at the right level and deterministic? Flag missing coverage on changed behavior and tests that assert nothing meaningful.
-6. **Safety & boundaries** — Resource handling (fds, processes, PTYs), sandbox and filesystem assumptions, untrusted input at the wire surface. Flag unbaked assumptions about mounts, arch, or capacity.
+6. **Safety & boundaries** — Resource handling, filesystem assumptions, untrusted input at the wire surface. Flag unbaked assumptions.
 7. **Dead code** — Code that nothing reaches or needs: unused functions, types, bindings, imports, and config; unreachable branches; commented-out blocks; parameters that are always passed the same value; behind-a-flag paths no longer wired up. Flag it for removal rather than preservation — the history keeps it.
-8. **Naming** — Names that mislead or obscure. Flag an identifier whose name implies behavior it does not have (a `get_` that mutates, a `_count` that is a list), and one so obtuse the reader must read the body to learn what it holds. Names state the plain observable fact (per the project's prose guide and `CONTEXT.md`'s ubiquitous language); flag drift from the domain term and invented synonyms for an existing concept.
+8. **Naming** — Names that mislead or obscure. Flag an identifier whose name implies behavior it does not have (a `get_` that mutates, a `_count` that is a list), and one so obtuse the reader must read the body to learn what it holds. Names state the plain observable fact (per the project's prose style guide and `CONTEXT.md`'s glossary); flag drift from the domain term and invented synonyms for an existing concept.
 9. **Performance** — Likely, not theoretical, performance problems on the real path: O(n²) over a list that grows, work repeated inside a loop that hoists out, an unbounded buffer or read, a full scan where a lookup exists, syscalls or process spawns in a hot path. Flag the input that makes it bite; do not chase micro-optimizations with no plausible scale.
-10. **Comments** — Hold every comment to the `sweep-comments` bar (the rules live in `prose.md`): a comment exists only to protect the next editor from breaking something they *cannot see in the code*. Flag a comment that restates the body, restates the identifier's name, documents an external tool's behavior, cites a doc/ADR or recounts history/roadmap, or translates a name (the name is wrong — note it for the naming dimension). Genuine gotchas — an ordering dependency, a deliberate absence, a wire invariant a concurrent reader relies on — stay. A comment that earns its place but is missing the _why_ is a finding too.
+10. **Comments** — Hold every comment to the `sweep-comments` bar (the rules live in `prose.md`): a comment exists only to protect the next editor from breaking something they _cannot see in the code_. Flag a comment that restates the body, restates the identifier's name, documents an external tool's behavior, cites a doc/ADR or recounts history/roadmap, or translates a name (the name is wrong — note it for the naming dimension). Genuine gotchas — an ordering dependency, a deliberate absence, a wire invariant a concurrent reader relies on — stay. A comment that earns its place but is missing the _why_ is a finding too.
 
 ## Severity scale
 

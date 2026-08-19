@@ -3,18 +3,26 @@ name: tour
 description: Author a comprehensive, top-to-bottom developer tour of the whole project or one subsystem, built from the source — terminology first, broad strokes then every rabbit hole, verbatim code labelled with file:line, and Mermaid diagrams for processes. Use when the user asks to deeply explain, document, or onboard someone to the architecture of the project or a subsystem from the code itself. Not for narrating a range of commits — that is the `recap` skill.
 ---
 
-# Tour
+# Create a codebase tour
 
 Produce one long-form Markdown document that guides a developer through a subject end to end: what it is, the terminology, the shape, then every load-bearing detail, showing real code and diagramming real flows. The output is durable onboarding documentation built from the source, not a narration of recent changes.
 
 ## Scope it first
 
-Decide what the tour covers before writing:
+The user may describes a specific subsystem to tour; otherwise the scope is the whole project.
 
 - **Whole project** — the orientation doc a new contributor reads once. Runs big-picture → cross-cutting foundations → each subsystem → appendices.
 - **One subsystem** — a focused deep-dive (the transport layer, the agent runtime). Same rules, narrower blast radius.
 
-Name the file for the scope: `.agents/tours/<scope>.md` (e.g. `.agents/gtours/project.md`, `docs/tours/agent-runtime.md`). Resolve conflicts by appending `-<number>`.
+Name the file for the scope: `.scratch/tours/<scope>.md` (e.g. `.agents/gtours/project.md`, `docs/tours/agent-runtime.md`). Resolve conflicts by appending `-<number>`.
+
+## Audience
+
+Don't assume a fixed reader profile. Decide the depth of explanation from, in order:
+
+1. **The `audience:` arg, if the invoker passed one** (e.g. `audience: backend engineer new to both`). An explicit arg wins outright.
+2. **Otherwise, your memory of the user's skillset** — the languages they're fluent in, _and the specific idioms you've already explained to them in past recaps._ Explain a construct the first time it appears for this user; once memory records it as known, reference it plainly and don't explain it again. This is what stops the same idioms (closures, generics, error-handling idioms, …) being explained run after run as the user's fluency grows — step 5 keeps the record current.
+3. **If you have neither an arg nor a relevant memory, treat every language as unfamiliar:** explain any genuinely non-obvious construct whatever its language, and state in the preamble that the audience was unspecified.
 
 ## Steps
 

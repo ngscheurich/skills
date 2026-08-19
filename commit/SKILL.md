@@ -1,11 +1,11 @@
 ---
 name: commit
-description: Write and create Git commits in house style — Conventional Commits plus the repo's prose conventions. Use when committing changes, drafting or amending a commit message, or whenever the user asks you to commit.
+description: Write and create Git commits in house style — Conventional Commits plus a standard prose convention. Use when committing changes, drafting or amending a commit message, or whenever the user asks you to commit.
 ---
 
-# Commit messages
+# Write a commit message
 
-Write every commit as a **Conventional Commit** that also follows the repo's prose conventions. Shape:
+Write every commit as a **Conventional Commit** that also follows a standard prose convention. Shape:
 
 ```
 type(scope): summary
@@ -44,7 +44,7 @@ Include a body whenever the change isn't self-evident from the subject. It expla
 
 - Separate it from the subject with one blank line, and hard-wrap at 72 columns.
 - Reference the decision record or acceptance criteria that motivated the change (e.g. `ADR-0011`, `AC #4`) when one applies.
-- Skip the body for genuinely trivial commits (a one-line chore, a typo fix).
+- Genuinely trivial commits (a one-line chore, a typo fix) need no description in the body, but it should still contain an attribution trailer (see below).
 
 ## Breaking changes
 
@@ -52,10 +52,7 @@ Mark a breaking change with `!` before the colon (`feat(server)!: ...`) and add 
 
 ## Prose conventions
 
-A commit message is prose — follow [`prose.md`](../prose.md). Read it for the full guidance; the two rules that bite most often in commit messages:
-
-- **Hyphenation:** don't hyphenate settled multi-word terms ("Unix domain socket", "coding agent").
-- **Inclusive language:** avoid the terms in the prose guide's table (e.g. "sanity check", "man-in-the-middle") and use its listed alternatives.
+A commit message is prose and should be written in a style cohesive with the project voice; use the `write-prose` skill when composing the message.
 
 ## Attribution
 

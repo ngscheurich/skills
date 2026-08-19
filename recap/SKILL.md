@@ -3,9 +3,9 @@ name: recap
 description: Generate a commit-by-commit recap of unpushed work or a chosen commit range, then wait for annotation. Use when the user asks to walk through, narrate, explain, or review their unpushed work, recent commits, or a chosen range of commits.
 ---
 
-# Recap
+# Recap a set of commits
 
-Generate a commit-by-commit Markdown recap of a range of local commits — by default everything unpushed, or a range the invoker chooses (see step 1) in `.agents/recaps/` — covering overall structure, notable code, and decisions with justification, then wait for annotation.
+Generate a commit-by-commit Markdown recap of a range of local commits — by default everything un-pushed, or a range the invoker chooses (see step 1) in `.scratch/recaps/` — covering overall structure, notable code, and decisions with justification, then wait for annotation.
 
 ## Audience
 

@@ -1,10 +1,10 @@
-# Vertical Slices
+# Vertical slices
 
-A *vertical slice* is one feature traced through every layer it touches, from its entry point down to the edge where it meets the outside world (disk, network, a database, an external process). Reviewing a slice end to end — rather than a single file or a flat diff — is what surfaces the bugs that live *between* layers: a value decoded wrong at a boundary, an error swallowed on the way back up, a contract two layers disagree on.
+A _vertical slice_ is one feature traced through every layer it touches, from its entry point down to the edge where it meets the outside world (disk, network, a database, an external process). Reviewing a slice end to end — rather than a single file or a flat diff — is what surfaces the bugs that live _between_ layers: a value decoded wrong at a boundary, an error swallowed on the way back up, a contract two layers disagree on.
 
 ## Identify a slice by its stable identity
 
-Name a slice by the domain concept and the command (or entry point) that drives it, not by source paths — paths drift, the concept and its surface do not. "Create a workspace" or "submit for review" is a slice; `src/foo/bar.ts:42` is not.
+Name a slice by the domain concept and the entry point that drives it, not by source paths — paths drift, the concept and its surface do not. "Create an order" or "user login" is a slice; `src/foo/bar.ts:42` is not.
 
 ## Trace the file set at review time
 
