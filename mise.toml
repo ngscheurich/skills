@@ -1,0 +1,14 @@
+[tools]
+python = "3.14.7"
+uv = "latest"
+
+[tasks]
+ci = '''
+# Validate skills
+status=0
+for dir in */; do
+  [ -f "${dir}SKILL.md" ] || continue
+  uvx --quiet --from skills-ref agentskills validate "./${dir%/}" || status=1
+done
+exit $status
+'''

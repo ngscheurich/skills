@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install Python
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.14.7"
+
+      - name: Install skills-ref
+        run: pip install skills-ref==0.1.1
+
+      - name: Validate every skill
+        run: |
+          status=0
+          for dir in */; do
+            [ -f "${dir}SKILL.md" ] || continue
+            echo "::group::${dir%/}"
+            agentskills validate "./${dir%/}" || status=1
+            echo "::endgroup::"
+          done
+          exit $status
