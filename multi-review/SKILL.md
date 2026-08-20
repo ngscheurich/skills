@@ -1,6 +1,7 @@
 ---
 name: multi-review
 description: Thoroughly code-review a vertical slice by running two or more reviewer subagents in parallel against a shared rubric, having a judge rank them, then synthesizing one coalesced review. Reviewer count is configurable. Use when the user wants a deep/competitive/multi-agent code review of a slice, feature, brief, or the current diff — "multi-review this slice", "competitive review", "have N agents review X".
+compatibility: Requires git and an agent runtime that can dispatch subagents in parallel
 ---
 
 # Run a competitive code review

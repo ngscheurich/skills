@@ -1,6 +1,7 @@
 ---
 name: sweep-comments
 description: A procedure for evaluating and trimming code comments across the codebase. Use when the user says "sweep comments", "check for comment quality", or otherwise wants an agent to clean up code comments.
+compatibility: Requires git for the comment-only verification gate; the project's own formatter, parser, or linter strengthens it
 ---
 
 # Run a comment sweep

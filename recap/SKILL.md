@@ -1,6 +1,7 @@
 ---
 name: recap
 description: Generate a commit-by-commit recap of unpushed work or a chosen commit range, then wait for annotation. Use when the user asks to walk through, narrate, explain, or review their unpushed work, recent commits, or a chosen range of commits. Not for explaining how the system works from the source — that is the `tour` skill.
+compatibility: Requires git; reads local history, so the range reflects the last fetch
 ---
 
 # Recap a set of commits

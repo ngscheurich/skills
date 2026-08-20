@@ -1,6 +1,7 @@
 ---
 name: tour
 description: Author a comprehensive, top-to-bottom developer tour of the whole project or one subsystem, built from the source — terminology first, broad strokes then every rabbit hole, verbatim code labelled with file:line, and Mermaid diagrams for processes. Use when the user asks to deeply explain, document, or onboard someone to the architecture of the project or a subsystem from the code itself. Not for narrating a range of commits — that is the `recap` skill.
+compatibility: Requires git and an agent runtime that can dispatch subagents in parallel
 ---
 
 # Create a codebase tour
