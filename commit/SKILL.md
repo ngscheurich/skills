@@ -43,6 +43,7 @@ Pick the type that names the change's intent, not the one matching the largest p
 Include a body whenever the change isn't self-evident from the subject. It explains the **why** — the reasoning, the constraint, the tradeoff — not the what the diff already shows.
 
 - Separate it from the subject with one blank line, and hard-wrap at 72 columns.
+- A body that walks area by area through what changed has become a diff summary. The diff is already in the commit — cut the tour and keep the reasoning.
 - Reference the decision record or acceptance criteria that motivated the change (e.g. `ADR-0011`, `AC #4`) when one applies.
 - Genuinely trivial commits (a one-line chore, a typo fix) need no description in the body, but it should still contain an attribution trailer (see below).
 
