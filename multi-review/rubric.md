@@ -6,12 +6,14 @@ The standard every reviewer holds the slice against, and the scale the judge sco
 
 Score the slice on each. A strong review covers all ten, weighted toward where the slice actually lives.
 
-1. **Correctness** — Does it do what it claims across the whole slice, including error paths, edge cases, and concurrency? Trace the data end to end. Decode failures, partial writes, crashes mid-operation, and lost messages at the wire boundary are correctness bugs, not nits.
+Several dimensions below name a wire or process boundary. Where a slice has none — a library, a CLI, a compiler, a data transform — read those rules as their in-process equivalent: deserialization, parsing, and any point where a value crosses from an untrusted source into code that trusts it. The boundary is wherever data changes hands, not only where it crosses a socket.
+
+1. **Correctness** — Does it do what it claims across the whole slice, including error paths, edge cases, and concurrency? Trace the data end to end. Decode failures, partial writes, crashes mid-operation, and data lost or garbled where it changes hands are correctness bugs, not nits.
 2. **Design & domain fit** — Does it match the domain model and the relevant ADRs/specs? Right seams, right layer for each responsibility, no concept invented where one already exists. Flag drift from a documented decision, and flag code that contradicts a spec.
-3. **Idiom & style** — Is it idiomatic per the project's language style guide(s)? Prefer standard idioms over reinvention, decode at boundaries. Flag non-idiomatic constructs.
+3. **Idiom & style** — Is it idiomatic per the project's language style guide(s)? Prefer standard idioms over reinvention, and parse or validate incoming data at the boundary rather than deep inside. Flag non-idiomatic constructs.
 4. **Prose** — Do comments and strings follow the project's prose style guide?
 5. **Tests** — Do tests exist and cover the behavior, including the failure paths? Are they at the right level and deterministic? Flag missing coverage on changed behavior and tests that assert nothing meaningful.
-6. **Safety & boundaries** — Resource handling, filesystem assumptions, untrusted input at the wire surface. Flag unbaked assumptions.
+6. **Safety & boundaries** — Resource handling, filesystem assumptions, and untrusted input wherever it enters — a wire surface, a parsed file, a command-line argument, a caller outside the module. Flag unbaked assumptions.
 7. **Dead code** — Code that nothing reaches or needs: unused functions, types, bindings, imports, and config; unreachable branches; commented-out blocks; parameters that are always passed the same value; behind-a-flag paths no longer wired up. Flag it for removal rather than preservation — the history keeps it.
 8. **Naming** — Names that mislead or obscure. Flag an identifier whose name implies behavior it does not have (a `get_` that mutates, a `_count` that is a list), and one so obtuse the reader must read the body to learn what it holds. Names state the plain observable fact (per the project's prose style guide and its domain glossary); flag drift from the domain term and invented synonyms for an existing concept.
 9. **Performance** — Likely, not theoretical, performance problems on the real path: O(n²) over a list that grows, work repeated inside a loop that hoists out, an unbounded buffer or read, a full scan where a lookup exists, syscalls or process spawns in a hot path. Flag the input that makes it bite; do not chase micro-optimizations with no plausible scale.
