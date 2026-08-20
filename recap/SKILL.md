@@ -30,7 +30,7 @@ Don't assume a fixed reader profile. Decide the depth of explanation from these 
 
 2. **Read each commit, oldest first.** For every SHA run `git show --stat <sha>` for the message and file list, then `git show <sha>` for the diff. When a hunk needs context, open the file with the read tools rather than guessing.
 
-3. **Write the recap** to a file: `out=".scratch/recaps/$(git branch --show-current | tr / -)-recap.md"`. Resolve naming conflicts by appending a `-<number>` to the filename. Follow the structure below and cover the commits in order so the narrative builds.
+3. **Write the recap** to a file: `name=$(git branch --show-current | tr / -); out=".scratch/recaps/${name:-$(git rev-parse --short HEAD)}-recap.md"` (the fallback covers a detached HEAD, where the branch name is empty). Resolve naming conflicts by appending a `-<number>` to the filename. Follow the structure below and cover the commits in order so the narrative builds.
 
 4. **Wait for review** then respond to the annotations the user sends back.
 

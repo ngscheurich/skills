@@ -9,7 +9,7 @@ Produce one long-form Markdown document that guides a developer through a subjec
 
 ## Scope it first
 
-The user may describes a specific subsystem to tour; otherwise the scope is the whole project.
+The user may name a specific subsystem to tour; otherwise the scope is the whole project.
 
 - **Whole project** — the orientation doc a new contributor reads once. Runs big-picture → cross-cutting foundations → each subsystem → appendices.
 - **One subsystem** — a focused deep-dive (the transport layer, the agent runtime). Same rules, narrower blast radius.

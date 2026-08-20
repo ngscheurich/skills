@@ -66,17 +66,18 @@ Co-Authored-By: <agent name and version> <noreply address>
 ## Examples
 
 ```
-feat(briefs): parse the frontmatter map for reads
+feat(config): read the frontmatter map without parsing the body
 
-Parses only the small frontmatter map (scalars and flat lists) via
-the frontmatter parser, leaving the body opaque per ADR-0011. Absent fields read as
-absent rather than erroring, so partial briefs don't crash reads.
+Only the scalars and flat lists in the frontmatter are parsed and the
+body stays opaque, per ADR-0011, so a document whose body is malformed
+still yields its metadata. Absent fields read as absent rather than
+erroring, so partial documents don't crash reads.
 
-Co-Authored-By: <agent name and version> <noreply address>
+Co-Authored-By: Example Agent 1.0 <noreply@example.com>
 ```
 
 ```
-chore: clean up skills lockfile
+chore: drop the stale dependency lockfile
 
-Co-Authored-By: <agent name and version> <noreply address>
+Co-Authored-By: Example Agent 1.0 <noreply@example.com>
 ```
