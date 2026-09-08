@@ -142,3 +142,7 @@ chore: drop the stale dependency lockfile
 
 Co-Authored-By: Some Agent
 ```
+
+## Signing
+
+If project commits are signed, but you don't have access to a signing mechanism, proceed with unsigned commits; it is the user's responsibility to sign them before pushing to a Git forge.
