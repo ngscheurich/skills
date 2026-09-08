@@ -8,6 +8,8 @@ compatibility: Requires git and an agent runtime that can dispatch agents in par
 
 Run a competitive, multi-agent code review of one vertical slice. Two or more reviewer agents review the same slice independently against [rubric.md](rubric.md), a judge ranks them, and you synthesize the field into a single coalesced review written to `.scratch/reviews/<slug>.md` (slug = brief name, branch, or a short feature kebab; resolve conflicts with `-<n>`). Note the slug you choose, as it may be used in further steps.
 
+You are the coordinator of this review. The reviews and the judgement come from other agents, dispatched per [dispatch.md](dispatch.md); you never author a review or the judgement yourself, because you also write the synthesis.
+
 ## 1. Resolve the slice
 
 Accept any of three targets and pin down the file set before dispatching:
@@ -37,13 +39,7 @@ The goal of this phase is to collect reviews from **N** agents, where **N is the
 
 > You are competing against other reviewers on the same slice. A judge will score your review against the rubric. Be exhaustive and precise: every finding cites `file:line`, names its rubric dimension and severity, states the concrete problem, and proposes a fix. Read the code and the cited standards yourself — do not trust the slice summary alone. Unsupported or speculative findings will be scored against you.
 
-**If you can spawn subagents**, launch them in a **single message with N agent calls** so they run concurrently.
-
-**If you cannot spawn subagents**, write the brief to a temp file (`mktemp`) after appending the following:
-
-> Write your findings to a file: `.scratch/reviews/<slug>/<uuid>.md`.
-
-Each reviewer returns a structured review (severity-ordered findings + an overall read), per the rubric's finding format.
+Each reviewer returns a structured review (severity-ordered findings + an overall read), per the rubric's finding format. Dispatch the briefs and collect the reviews per [dispatch.md](dispatch.md), using the variant that matches your executor. This phase is done only when every reviewer's output file exists.
 
 ## 4. Judge the field
 
@@ -51,11 +47,7 @@ The reviews must now be judged by another agent. Give the judge a brief: the sli
 
 > You are a judge comparing findings from multiple reviewers. You must: score each review on the rubric dimensions, name a **winner** (the most thorough _and_ accurate), flag any finding it judges wrong or unsupported, and list the strongest **unique** catches from each non-winning review. The judge ranks; it does not write the final review.
 
-**If you can spawn subagents**, spawn one judge subagent and hand it all reviews verbatim.
-
-**If you cannot spawn subagents**, write the brief to a temp file after appending the following:
-
-> Write your findings to a file: `.scratch/reviews/<slug>/judgement.md`.
+Dispatch the judge brief per [dispatch.md](dispatch.md). This phase is done only when the judge's output exists.
 
 ## 5. Synthesize one coalesced review
 
