@@ -1,12 +1,12 @@
 ---
 name: multi-review
-description: Thoroughly code-review a vertical slice by running two or more reviewer subagents in parallel against a shared rubric, having a judge rank them, then synthesizing one coalesced review. Reviewer count is configurable. Use when the user wants a deep/competitive/multi-agent code review of a slice, feature, brief, or the current diff — "multi-review this slice", "competitive review", "have N agents review X".
-compatibility: Requires git and an agent runtime that can dispatch subagents in parallel
+description: Thoroughly code-review a vertical slice by running two or more reviewer agents in parallel against a shared rubric, having a judge rank them, then synthesizing one coalesced review. Reviewer count is configurable. Use when the user wants a deep/competitive/multi-agent code review of a slice, feature, brief, or the current diff — "multi-review this slice", "competitive review", "have N agents review X".
+compatibility: Requires git and an agent runtime that can dispatch agents in parallel
 ---
 
 # Run a competitive code review
 
-Run a competitive, multi-agent code review of one vertical slice. Two or more reviewer subagents review the same slice independently against [rubric.md](rubric.md), a judge ranks them, and you synthesize the field into a single coalesced review written to `.scratch/reviews/`.
+Run a competitive, multi-agent code review of one vertical slice. Two or more reviewer agents review the same slice independently against [rubric.md](rubric.md), a judge ranks them, and you synthesize the field into a single coalesced review written to `.scratch/reviews/<slug>.md` (slug = brief name, branch, or a short feature kebab; resolve conflicts with `-<n>`). Note the slug you choose, as it may be used in further steps.
 
 ## 1. Resolve the slice
 
@@ -33,20 +33,34 @@ Collect what the reviewers must hold the code against, so each one reads the sam
 
 ## 3. Dispatch the reviewers (parallel, competing)
 
-Spawn **N** reviewer subagents, where **N is the count the user passes** (e.g. `/multi-review 4 <target>` → 4 reviewers). Clamp to **2 ≤ N ≤ 6**; default to 2 when no count is given. Launch them in a **single message with N agent calls** so they run concurrently. Give every reviewer the identical brief: the slice definition, the standards paths, the finding format from the rubric, and this framing:
+The goal of this phase is to collect reviews from **N** agents, where **N is the count the user passes** (e.g. `/multi-review 4 <target>` → 4 reviewers). Clamp to **2 ≤ N ≤ 6**; default to 2 when no count is given. Give every reviewer the identical brief: the slice definition, the standards paths, the finding format from the rubric, and this framing:
 
 > You are competing against other reviewers on the same slice. A judge will score your review against the rubric. Be exhaustive and precise: every finding cites `file:line`, names its rubric dimension and severity, states the concrete problem, and proposes a fix. Read the code and the cited standards yourself — do not trust the slice summary alone. Unsupported or speculative findings will be scored against you.
+
+**If you can spawn subagents**, launch them in a **single message with N agent calls** so they run concurrently.
+
+**If you cannot spawn subagents**, write the brief to a temp file (`mktemp`) after appending the following:
+
+> Write your findings to a file: `.scratch/reviews/<slug>/<uuid>.md`.
 
 Each reviewer returns a structured review (severity-ordered findings + an overall read), per the rubric's finding format.
 
 ## 4. Judge the field
 
-Spawn one **judge** subagent. Give it the slice definition, the rubric, and all reviews verbatim. It must: score each review on the rubric dimensions, name a **winner** (the most thorough _and_ accurate), flag any finding it judges wrong or unsupported, and list the strongest **unique** catches from each non-winning review. The judge ranks; it does not write the final review.
+The reviews must now be judged by another agent. Give the judge a brief: the slice definition, the rubric, and this framing:
+
+> You are a judge comparing findings from multiple reviewers. You must: score each review on the rubric dimensions, name a **winner** (the most thorough _and_ accurate), flag any finding it judges wrong or unsupported, and list the strongest **unique** catches from each non-winning review. The judge ranks; it does not write the final review.
+
+**If you can spawn subagents**, spawn one judge subagent and hand it all reviews verbatim.
+
+**If you cannot spawn subagents**, write the brief to a temp file after appending the following:
+
+> Write your findings to a file: `.scratch/reviews/<slug>/judgement.md`.
 
 ## 5. Synthesize one coalesced review
 
 Build the final review yourself using the winner as the spine: graft in the unique findings the judge credited to the other reviewers, drop anything the judge flagged as wrong, de-dupe overlaps, and re-sort every finding by severity. Attribute nothing to individual reviewers in the body — it reads as one review.
 
-Write it to `.scratch/reviews/<slug>.md` (slug = brief name, branch, or a short feature kebab; resolve conflicts with `-<n>`). Open with a one-paragraph verdict and a severity tally, then the findings. End the file with a short `## Provenance` note: the targets, reviewer count, and which review the judge ranked first. Print the verdict and tally to chat with the file path.
+Write it to `.scratch/reviews/<slug>.md`. Open with a one-paragraph verdict and a severity tally, then the findings. End the file with a short `## Provenance` note: the targets, reviewer count, and which review the judge ranked first. Print the verdict and tally to chat with the file path.
 
 `.scratch/` is a working directory for artifacts that aren't part of the project's own documentation. Create it if absent, and add it to the project's ignore file if it isn't already covered.
