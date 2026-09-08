@@ -94,10 +94,34 @@ A commit message is prose and should be written in a style cohesive with the pro
 
 ## Attribution
 
-End every commit you author with a `Co-Authored-By` trailer, after a blank line, that identifies you — the authoring coding agent — by name and a noreply address. Fill in your own identity:
+End every commit you author with a `Co-Authored-By` trailer, after a blank line, that identifies you — the authoring coding agent — by name. Fill in your own identity:
 
 ```
-Co-Authored-By: <agent name and version> <noreply address>
+Co-Authored-By: <agent name and version>
+```
+
+Do not prepend the model name with the company name:
+
+- **Good:** `Claude Fable 5.1`
+- **Bad:** `Anthropic Claude Fable 5.1`, `Anthropic: Claude Fable 5.1`
+
+### Email address
+
+If applicable, the following email addresses should be listed in angle brackets after the model name:
+
+- **Anthropic models:** `noreply@anthropic.com`
+- **OpenAI models:** `noreply@openai.com`
+
+Other models should omit the email address.
+
+Examples:
+
+```
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+```
+
+```
+Co-Authored-By: GPT 5.6 Sol <noreply@openai.com>
 ```
 
 ## Examples
@@ -116,5 +140,5 @@ Co-Authored-By: Example Agent 1.0 <noreply@example.com>
 ```
 chore: drop the stale dependency lockfile
 
-Co-Authored-By: Example Agent 1.0 <noreply@example.com>
+Co-Authored-By: Some Agent
 ```

@@ -10,3 +10,7 @@ This is my living set of [Agent Skills](https://agentskills.io/home).
 - **[sweep-comments](sweep-comments/SKILL.md)** — Evaluate and trim code comments across a codebase at a consistent altitude, with per-language comment syntax and a verification gate that proves no code token moved.
 - **[tour](tour/SKILL.md)** — Author a comprehensive, top-to-bottom developer tour of the whole project or one subsystem, built from the source — terminology first, broad strokes then every rabbit hole, verbatim code labelled with `file:line`, and Mermaid diagrams for processes.
 - **[write-prose](write-prose/SKILL.md)** — Write prose in a cohesive, inclusive style, deferring to the project's own prose guide and falling back to the bundled one.
+
+## AI Use Disclaimer
+
+This codebase has been built with the support of coding agents.
